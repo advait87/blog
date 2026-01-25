@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>advait.pro</title>
+  <!-- Tailwind CSS for layout utilities -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://i.postimg.cc/hGLcg8gT/icon.png" rel="icon">
+
+  <style>
+    /* --- Theming Logic --- */
+    :root {
+      --transition-speed: 0.3s;
+    }
+
+    /* Light Theme (Default) */
+    body[data-theme="light"] {
+      --bg-color: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --accent-color: #2563eb;
+      /* Blue-600 */
+      --ui-bg: #f3f4f6;
+      --ui-border: #e5e7eb;
+      --theme-btn-border: #d1d5db;
+    }
+
+    /* Dark Theme */
+    body[data-theme="dark"] {
+      --bg-color: #121212;
+      --text-primary: #e5e5e5;
+      --text-secondary: #a3a3a3;
+      --accent-color: #60a5fa;
+      /* Blue-400 */
+      --ui-bg: #262626;
+      --ui-border: #404040;
+      --theme-btn-border: #525252;
+    }
+
+    /* Sepia Theme */
+    body[data-theme="sepia"] {
+      --bg-color: #f4ecd8;
+      --text-primary: #433422;
+      --text-secondary: #7e6a52;
+      --accent-color: #d97706;
+      /* Amber-600 */
+      --ui-bg: #e6dac3;
+      --ui-border: #d1c7b7;
+      --theme-btn-border: #c2b5a3;
+    }
+
+    /* --- Global Styles --- */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* Font Classes */
+    .font-sans-system {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    .font-serif-times {
+      font-family: "Times New Roman", Times, serif;
+    }
+
+
+    /* Typography */
+    h1,
+    h2,
+    h3 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      white-space: pre-line;
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-text {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* --- Modern Controls --- */
+    .controls-wrapper {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 12px;
+      z-index: 50;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      background-color: var(--ui-bg);
+      border: 1px solid var(--ui-border);
+      border-radius: 9999px;
+      /* Pill shape */
+      padding: 4px 8px;
+      gap: 8px;
+      transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    }
+
+    /* Font Button Styles */
+    .font-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+
+    .font-btn:hover {
+      color: var(--text-primary);
+      background-color: rgba(125, 125, 125, 0.1);
+    }
+
+    .font-btn.active {
+      color: var(--text-primary);
+      font-weight: bold;
+      /* text-decoration: underline; */
+      /* text-underline-offset: 4px; */
+    }
+
+    /* Theme Color Button Styles */
+    .theme-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid var(--theme-btn-border);
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      position: relative;
+      opacity: 0.4;
+      /* Dimmed by default */
+    }
+
+    .theme-btn:hover {
+      opacity: 0.7;
+    }
+
+    .theme-btn.active {
+      opacity: 1;
+      /* Fully visible when active */
+      transform: scale(1.1);
+      /* Removed the extra box-shadow border */
+    }
+
+    /* Specific colors for the buttons so they look same regardless of current theme */
+    .theme-btn-light {
+      background-color: #ffffff;
+    }
+
+    .theme-btn-sepia {
+      background-color: #f4ecd8;
+    }
+
+    .theme-btn-dark {
+      background-color: #121212;
+    }
+
+    /* Mobile Adjustment for controls */
+    @media (max-width: 640px) {
+      .controls-wrapper {
+        position: absolute;
+        top: 10px;
+        right: 50%;
+        transform: translateX(50%);
+        width: max-content;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="light" class="font-sans-system min-h-screen flex flex-col">
+
+  <!-- Controls (Fixed Top Right) -->
+  <div class="controls-wrapper">
+    <!-- Theme Toggle (Circles) -->
+    <div class="control-group" id="theme-toggles">
+      <button class="theme-btn theme-btn-light active" onclick="setTheme('light')" aria-label="Light Mode"></button>
+      <button class="theme-btn theme-btn-sepia" onclick="setTheme('sepia')" aria-label="Sepia Mode"></button>
+      <button class="theme-btn theme-btn-dark" onclick="setTheme('dark')" aria-label="Dark Mode"></button>
+    </div>
+
+    <!-- Font Toggle (Aa) -->
+    <div class="control-group" id="font-toggles">
+      <button class="font-btn font-sans-system active" onclick="setFont('sans')">Aa</button>
+      <button class="font-btn font-serif-times" onclick="setFont('serif')">Aa</button>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <!-- mx-auto centers the container, text-left keeps text aligned left -->
+  <main class="flex-grow w-full max-w-2xl mx-auto px-6 py-24 sm:py-32 text-left">
+
+    <!-- Blog Post Container (Single Post) -->
+    <div id="posts-container" class="min-h-[300px]">
+      <!-- Post injected here -->
+    </div>
+
+  </main>
+
+  <!-- Simple Footer -->
+
+  <script>
+    // --- 1. MOCK DATA (Single Post) ---
+    // Replace this object with your JSON data
+    const blogPost = {
+      "title": "Already in meta",
+      "created_at": "Jan 25, 2026",
+      "content": `
+Hmm.
+
+Okay, so I'm typing this in the nvim coffee mode. I got this mode from a good man whose website is something like fully faltoo.com or something.
+You can find that post <u><a target="_blank" href="https://fully-faltoo.com/p/neovim-coffeemode/">here</a></u>.
+
+
+So this is the second episode, and please don't expect the writing to be as good as the first one, the first one had a banger of a story to back that writing. This one is just meta stuff so I can keep ignoring doing actual work.
+
+Now, what am I doing with this website?? Why did I even buy this domain? What's my plan?
+
+One thing that I want to do is to create a place to write down my thoughts. I've been told that writing makes you a better thinker. I don't really know if that's true for typing. But I do wanna be a ast typer. Like typing as fast as I'm thinking. I'm not even close to that, but I do wanna be at that level.
+
+But what's my plan with the website? Is this going to be a daily thing? Probably not. I think there will be moments where I'll be writing almost daily, and there will be days where I won't be publishing at all for a long time. Somewhere in between those two, I'll die, so will you ig. But till that happens, I don't want to commit today to write an hour daily, nope. I don't even know if I love writing or if it's very benefecial to me. If neither, what's the point? This is more or less just an experiment.
+
+Umm, an expensive experiment. Cause I've spent ig 304 rs on buying the domain. I'm planning to put almost 400 rs per month going forward to buy hosting for this site. And my plan is to justy try the cutting edge of technologies with this website. I want to do web-assembly, I want to do PWAs, I want to do htmx. If you tink there are a lot of cutting edge things than this in the web dev world, and I'm sure there are, please mail me at advait.andhale@iitgn.ac.in. If I'm out of IIT at the time you're reading this, well I think the cutting edge would have changed by now.
+
+But yeah, I want to create UI using Rust or C. I want to try server side rendering. I want to just try things out. Maybe I'll change the UI drastically going down the line. Many of you(lol) won't like that change, but it's my website so my rules.
+
+Aside from that, now I want to go back to actual work. I'll maybe write a PR on the timetable repo. I have some thoughts on my GSoC thing, but I'll spit those out later.
+
+Till then, muchas gracias para leer esta blog.
+Adios!
+
+
+(I do wanna write one or few blogs in español, o yo quero escribir pocos blogs en español)
+`
+    };
+
+    // --- 2. RENDER LOGIC ---
+    const container = document.getElementById('posts-container');
+
+    // Helper to format date
+    const formatDate = (dateString) => {
+      const options = {year: 'numeric', month: 'long', day: 'numeric'};
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
+    // Render single post
+    function renderPost() {
+      container.innerHTML = `
+                <article class="animate-fade-in">
+                    <header>
+                        <h2 class="text-3xl sm:text-4xl mb-3 text-[var(--text-primary)]">
+                            ${blogPost.title}
+                        </h2>
+                        <div class="meta-text">
+                            ${formatDate(blogPost.created_at)}
+                        </div>
+                    </header>
+                    <div class="prose prose-lg text-[var(--text-primary)] leading-relaxed">
+                        <p>${blogPost.content}</p>
+                    </div>
+                </article>
+            `;
+    }
+
+    // --- 3. THEME & FONT LOGIC ---
+
+    function updateActiveButton(parentId, classSelector) {
+      const parent = document.getElementById(parentId);
+      const buttons = parent.querySelectorAll('button');
+
+      if (parentId === 'theme-toggles') {
+        buttons.forEach(btn => {
+          if (btn.classList.contains(`theme-btn-${classSelector}`)) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+      else {
+        buttons.forEach(btn => {
+          if (btn.getAttribute('onclick').includes(classSelector)) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+    }
+
+    function setTheme(themeName) {
+      document.body.setAttribute('data-theme', themeName);
+      updateActiveButton('theme-toggles', themeName);
+      localStorage.setItem('blogTheme', themeName);
+    }
+
+    function setFont(fontName) {
+      const body = document.body;
+
+      if (fontName === 'sans') body.classList.add('font-sans-system');
+      if (fontName === 'serif') body.classList.add('font-serif-times');
+
+      updateActiveButton('font-toggles', fontName);
+      localStorage.setItem('blogFont', fontName);
+    }
+
+    // --- 4. INITIALIZATION ---
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPost();
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const savedTheme = localStorage.getItem('blogTheme') || 'light';
+      const savedFont = localStorage.getItem('blogFont') || 'sans';
+
+      setTheme(savedTheme);
+      setFont(savedFont);
+    });
+
+  </script>
+</body>
+
+</html>
