@@ -4,11 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minimal Blog - Home</title>
+  <title>advait.pro</title>
   <!-- Tailwind CSS for layout utilities -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Roboto -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://i.postimg.cc/hGLcg8gT/icon.png" rel="icon">
 
   <style>
     /* --- Theming Logic --- */
@@ -70,9 +69,6 @@
       font-family: "Times New Roman", Times, serif;
     }
 
-    .font-roboto {
-      font-family: 'Roboto', sans-serif;
-    }
 
     /* Typography */
     h1,
@@ -84,6 +80,7 @@
     }
 
     p {
+      white-space: pre-line;
       margin-bottom: 1.5rem;
     }
 
@@ -136,6 +133,8 @@
     .font-btn.active {
       color: var(--text-primary);
       font-weight: bold;
+      /* text-decoration: underline; */
+      /* text-underline-offset: 4px; */
     }
 
     /* Theme Color Button Styles */
@@ -159,6 +158,7 @@
       opacity: 1;
       /* Fully visible when active */
       transform: scale(1.1);
+      /* Removed the extra box-shadow border */
     }
 
     /* Specific colors for the buttons so they look same regardless of current theme */
@@ -184,30 +184,6 @@
         width: max-content;
       }
     }
-
-    /* Link styling for the read more arrow */
-    .read-more-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      font-weight: 500;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-    }
-
-    .read-more-link:hover {
-      opacity: 1;
-    }
-
-    .read-more-arrow {
-      transition: transform 0.2s;
-      margin-left: 6px;
-    }
-
-    .read-more-link:hover .read-more-arrow {
-      transform: translateX(4px);
-    }
   </style>
 </head>
 
@@ -226,66 +202,59 @@
     <div class="control-group" id="font-toggles">
       <button class="font-btn font-sans-system active" onclick="setFont('sans')">Aa</button>
       <button class="font-btn font-serif-times" onclick="setFont('serif')">Aa</button>
-      <button class="font-btn font-roboto" onclick="setFont('roboto')">Aa</button>
     </div>
   </div>
 
   <!-- Main Content Layout -->
+  <!-- mx-auto centers the container, text-left keeps text aligned left -->
   <main class="flex-grow w-full max-w-2xl mx-auto px-6 py-24 sm:py-32 text-left">
 
-    <!-- Site Header - Re-added for the Home view context -->
-    <header class="mb-16 border-b border-[var(--ui-border)] pb-8 transition-colors duration-300">
-      <h1 class="text-4xl sm:text-5xl tracking-tight mb-4 transition-colors duration-300">My Minimal Blog</h1>
-      <p class="text-[var(--text-secondary)] text-lg transition-colors duration-300">
-        Latest updates and stories.
-      </p>
-    </header>
-
-    <!-- Blog Posts List -->
-    <div id="posts-list" class="space-y-16">
-      <!-- Posts injected here -->
+    <!-- Blog Post Container (Single Post) -->
+    <div id="posts-container" class="min-h-[300px]">
+      <!-- Post injected here -->
     </div>
 
   </main>
 
   <!-- Simple Footer -->
-  <footer class="w-full max-w-2xl mx-auto px-6 pb-12 text-left">
-    <p class="text-[var(--text-secondary)] text-sm">
-      &copy; <span id="year"></span> Minimal Blog.
-    </p>
-  </footer>
 
   <script>
-    // --- 1. MOCK DATA (List of Posts) ---
-    // 'content' is already shortened by server logic as requested
-    const blogPosts = [
-      {
-        "title": "Fuckkkk",
-        "created_at": "January 25, 2026",
-        "content": `
-Well, fuckkkk.
-It's 3:42 AM on Jan 25th. I did something really fucking stupid on 3:37 AM.
-
-I was in the ~/blog directory and I did rm -rf ../*
-For those who know what this does, I can hear your sighs and smiles of condescence.
-`,
-        "url": "https://advait.pro/blog/Fuckkkk"
-      },
-      {
-        "title": "Already in meta",
-        "created_at": "January 25, 2026",
-        "content": `
+    // --- 1. MOCK DATA (Single Post) ---
+    // Replace this object with your JSON data
+    const blogPost = {
+      "title": "Already in meta",
+      "created_at": "Jan 25, 2026",
+      "content": `
 Hmm.
 
 Okay, so I'm typing this in the nvim coffee mode. I got this mode from a good man whose website is something like fully faltoo.com or something.
+You can find that post <u><a target="_blank" href="https://fully-faltoo.com/p/neovim-coffeemode/">here</a></u>.
 
-`,
-        "url": "https://advait.pro/blog/already_in_meta"
-      },
-    ];
+
+So this is the second episode, and please don't expect the writing to be as good as the first one, the first one had a banger of a story to back that writing. This one is just meta stuff so I can keep ignoring doing actual work.
+
+Now, what am I doing with this website?? Why did I even buy this domain? What's my plan?
+
+One thing that I want to do is to create a place to write down my thoughts. I've been told that writing makes you a better thinker. I don't really know if that's true for typing. But I do wanna be a ast typer. Like typing as fast as I'm thinking. I'm not even close to that, but I do wanna be at that level.
+
+But what's my plan with the website? Is this going to be a daily thing? Probably not. I think there will be moments where I'll be writing almost daily, and there will be days where I won't be publishing at all for a long time. Somewhere in between those two, I'll die, so will you ig. But till that happens, I don't want to commit today to write an hour daily, nope. I don't even know if I love writing or if it's very benefecial to me. If neither, what's the point? This is more or less just an experiment.
+
+Umm, an expensive experiment. Cause I've spent ig 304 rs on buying the domain. I'm planning to put almost 400 rs per month going forward to buy hosting for this site. And my plan is to justy try the cutting edge of technologies with this website. I want to do web-assembly, I want to do PWAs, I want to do htmx. If you tink there are a lot of cutting edge things than this in the web dev world, and I'm sure there are, please mail me at advait.andhale@iitgn.ac.in. If I'm out of IIT at the time you're reading this, well I think the cutting edge would have changed by now.
+
+But yeah, I want to create UI using Rust or C. I want to try server side rendering. I want to just try things out. Maybe I'll change the UI drastically going down the line. Many of you(lol) won't like that change, but it's my website so my rules.
+
+Aside from that, now I want to go back to actual work. I'll maybe write a PR on the timetable repo. I have some thoughts on my GSoC thing, but I'll spit those out later.
+
+Till then, muchas gracias para leer esta blog.
+Adios!
+
+
+(I do wanna write one or few blogs in español, o yo quero escribir pocos blogs en español)
+`
+    };
 
     // --- 2. RENDER LOGIC ---
-    const listContainer = document.getElementById('posts-list');
+    const container = document.getElementById('posts-container');
 
     // Helper to format date
     const formatDate = (dateString) => {
@@ -293,38 +262,26 @@ Okay, so I'm typing this in the nvim coffee mode. I got this mode from a good ma
       return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
-    // Render List
-    function renderPostsList() {
-      listContainer.innerHTML = ''; // Clear existing
-
-      blogPosts.forEach(post => {
-        const article = document.createElement('article');
-        article.className = "group block";
-
-        article.innerHTML = `
+    // Render single post
+    function renderPost() {
+      container.innerHTML = `
+                <article class="animate-fade-in">
                     <header>
-                        <h2 class="text-2xl sm:text-3xl mb-2 text-[var(--text-primary)] transition-colors duration-300">
-                            ${post.title}
+                        <h2 class="text-3xl sm:text-4xl mb-3 text-[var(--text-primary)]">
+                            ${blogPost.title}
                         </h2>
                         <div class="meta-text">
-                            ${formatDate(post.created_at)}
+                            ${formatDate(blogPost.created_at)}
                         </div>
                     </header>
-                    <div class="text-[var(--text-primary)] leading-relaxed mb-4 transition-colors duration-300">
-                        <p>${post.content}</p>
+                    <div class="prose prose-lg text-[var(--text-primary)] leading-relaxed">
+                        <p>${blogPost.content}</p>
                     </div>
-
-                    <!-- Read More Arrow -->
-                    <a href="${post.url}" class="read-more-link">
-                        Read full post <span class="read-more-arrow">&rarr;</span>
-                    </a>
-                `;
-
-        listContainer.appendChild(article);
-      });
+                </article>
+            `;
     }
 
-    // --- 3. THEME & FONT LOGIC (Same as index.html) ---
+    // --- 3. THEME & FONT LOGIC ---
 
     function updateActiveButton(parentId, classSelector) {
       const parent = document.getElementById(parentId);
@@ -358,11 +315,9 @@ Okay, so I'm typing this in the nvim coffee mode. I got this mode from a good ma
 
     function setFont(fontName) {
       const body = document.body;
-      body.classList.remove('font-sans-system', 'font-serif-times', 'font-roboto');
 
       if (fontName === 'sans') body.classList.add('font-sans-system');
       if (fontName === 'serif') body.classList.add('font-serif-times');
-      if (fontName === 'roboto') body.classList.add('font-roboto');
 
       updateActiveButton('font-toggles', fontName);
       localStorage.setItem('blogFont', fontName);
@@ -371,7 +326,7 @@ Okay, so I'm typing this in the nvim coffee mode. I got this mode from a good ma
     // --- 4. INITIALIZATION ---
 
     document.addEventListener('DOMContentLoaded', () => {
-      renderPostsList();
+      renderPost();
       document.getElementById('year').textContent = new Date().getFullYear();
 
       const savedTheme = localStorage.getItem('blogTheme') || 'light';
