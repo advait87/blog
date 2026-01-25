@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Blog</title>
+    <!-- Tailwind CSS for layout utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Theming Logic --- */
+        :root {
+            --transition-speed: 0.3s;
+        }
+
+        /* Light Theme (Default) */
+        body[data-theme="light"] {
+            --bg-color: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent-color: #2563eb; /* Blue-600 */
+            --ui-bg: #f3f4f6;
+            --ui-border: #e5e7eb;
+            --theme-btn-border: #d1d5db;
+        }
+
+        /* Dark Theme */
+        body[data-theme="dark"] {
+            --bg-color: #121212;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a3a3a3;
+            --accent-color: #60a5fa; /* Blue-400 */
+            --ui-bg: #262626;
+            --ui-border: #404040;
+            --theme-btn-border: #525252;
+        }
+
+        /* Sepia Theme */
+        body[data-theme="sepia"] {
+            --bg-color: #f4ecd8;
+            --text-primary: #433422;
+            --text-secondary: #7e6a52;
+            --accent-color: #d97706; /* Amber-600 */
+            --ui-bg: #e6dac3;
+            --ui-border: #d1c7b7;
+            --theme-btn-border: #c2b5a3;
+        }
+
+        /* --- Global Styles --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        /* Font Classes */
+        .font-sans-system { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+        .font-serif-times { font-family: "Times New Roman", Times, serif; }
+        .font-roboto { font-family: 'Roboto', sans-serif; }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+			white-space: pre-line;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-text {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Modern Controls --- */
+        .controls-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 50;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            background-color: var(--ui-bg);
+            border: 1px solid var(--ui-border);
+            border-radius: 9999px; /* Pill shape */
+            padding: 4px 8px;
+            gap: 8px;
+            transition: background-color var(--transition-speed), border-color var(--transition-speed);
+        }
+
+        /* Font Button Styles */
+        .font-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+
+        .font-btn:hover {
+            color: var(--text-primary);
+            background-color: rgba(125, 125, 125, 0.1);
+        }
+
+        .font-btn.active {
+            color: var(--text-primary);
+            font-weight: bold;
+            /* text-decoration: underline; */
+            /* text-underline-offset: 4px; */
+        }
+
+        /* Theme Color Button Styles */
+        .theme-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid var(--theme-btn-border);
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            position: relative;
+            opacity: 0.4; /* Dimmed by default */
+        }
+
+        .theme-btn:hover {
+            opacity: 0.7;
+        }
+
+        .theme-btn.active {
+            opacity: 1; /* Fully visible when active */
+            transform: scale(1.1);
+            /* Removed the extra box-shadow border */
+        }
+
+        /* Specific colors for the buttons so they look same regardless of current theme */
+        .theme-btn-light { background-color: #ffffff; }
+        .theme-btn-sepia { background-color: #f4ecd8; }
+        .theme-btn-dark  { background-color: #121212; }
+
+        /* Mobile Adjustment for controls */
+        @media (max-width: 640px) {
+            .controls-wrapper {
+                position: absolute;
+                top: 10px;
+                right: 50%;
+                transform: translateX(50%);
+                width: max-content;
+            }
+        }
+
+    </style>
+</head>
+<body data-theme="light" class="font-sans-system min-h-screen flex flex-col">
+
+    <!-- Controls (Fixed Top Right) -->
+    <div class="controls-wrapper">
+        <!-- Theme Toggle (Circles) -->
+        <div class="control-group" id="theme-toggles">
+            <button class="theme-btn theme-btn-light active" onclick="setTheme('light')" aria-label="Light Mode"></button>
+            <button class="theme-btn theme-btn-sepia" onclick="setTheme('sepia')" aria-label="Sepia Mode"></button>
+            <button class="theme-btn theme-btn-dark" onclick="setTheme('dark')" aria-label="Dark Mode"></button>
+        </div>
+
+        <!-- Font Toggle (Aa) -->
+        <div class="control-group" id="font-toggles">
+            <button class="font-btn font-sans-system active" onclick="setFont('sans')">Aa</button>
+            <button class="font-btn font-serif-times" onclick="setFont('serif')">Aa</button>
+            <button class="font-btn font-roboto" onclick="setFont('roboto')">Aa</button>
+        </div>
+    </div>
+
+    <!-- Main Content Layout -->
+    <!-- mx-auto centers the container, text-left keeps text aligned left -->
+    <main class="flex-grow w-full max-w-2xl mx-auto px-6 py-24 sm:py-32 text-left">
+        
+        <!-- Blog Post Container (Single Post) -->
+        <div id="posts-container" class="min-h-[300px]">
+            <!-- Post injected here -->
+        </div>
+
+    </main>
+
+    <!-- Simple Footer -->
+
+    <script>
+        // --- 1. MOCK DATA (Single Post) ---
+        // Replace this object with your JSON data
+        const blogPost = {
+            "title": "FUCKKKK",
+            "created_at": "Jan 25, 2026",
+            "content": `
+Well, fuckkkk.
+It's 3:42 AM on Jan 25th. I did something really fucking stupid on 3:37 AM.
+
+I was in the ~/blog directory and I did rm -rf ../*
+For those who know what this does, I can hear your sighs and smiles of condescence.
+
+For those who don't, well I basically deleted most of my important data on my MacBook in such a way that it's not recoverable.
+
+But what now?
+Well I think I'll face most of the consequences of my sins not in the next hour, but in due time. I'm glad that Github exists. Cause I was working on 3 projects that were worth something. For totally unrelated reasons to backing up data, all of them are on my Gitub. You know what, I'm not a beleiver in any sense of the word. But things like these, make me grateful for the subtle strokes of luck that life provides you with.
+
+Truth be told, I am just very(can't emphasize enough) that my dumbass didn't put a sudo in front of the command.
+
+But how did I arrive at doing rm -rf ../\*?
+Well, I had a rough day on 24th the Jan. Not entirely rough, there was a cricket match in involved and obviously I played 2 great cover drives. Unfornutaly, I got out cause I couldn't keep a square cut on the ground. But even then, we won the match, and boy did we win it! I'll just add this, while chasing, the last over was dot, wicket, wicket, 2, 6. We won with one ball to spare!
+
+So I celebrated with an Oreo shake and a Dragon Pizza Sandwich with Cheese.
+
+Before that, it was the usual, I had an online class from 10 AM to 1 PM, nothing special. I got called out in the class cause I was watching the class while laying down on my pillow(exactly what I'm doing now).
+
+But the kicker was that nothing non-ordinary happened. Like the cricket match was good. But also after that match, I saw the RCB game, and we lost. I do watch a lot of RCB games, and they do account for a lot of timepass that I do, but usually they win(at least this season), and I don't feel so shit after the match ends. But this time, I had lost the time and RCB lost. Also, I did waste time after and before that. I wasted time in the afternoon, and after coming back to my room at night.
+
+So cause there was nothing noteworthy about the day, I decided to buy a domain. And I did! I was first keen to buy advait.codes, but on hostinger, it was more expensive than advait.pro. And also, I don't want my blog or my entire identity to be around coding. I do love coding, but I love problem solving, I love Cricket, I love philosophy tbh, also performance psycology. So I bought advait.pro.
+
+Now I connected it to my vercel account and published a template next_js blog with some boilerplate code. But then I thought, I want all my code to be written by me, Organic. So I cloned the repo in my home directory. Instead of my Code directory or any other directory.
+
+Oh fucckkkk!!! I just realized I did not put one of the important projects on Github and deleted it, the Astroul one. Nice.
+
+So I cloned the repo in my home directory. And I did 
+
+cd blog
+AND rm -rf ../* instead of rm -rf ./*
+AND, I pressed y the moment it asked for my approval.
+
+
+Seconds passed, I thought why is it taking so long to remove boilerplate NextJS blog. And the evil happened. Tbh I pressed couple of Ctrl Cs in those seconds, but ig nothing happened.
+
+It said, cannot delete Desktop, permission denied, and it occured on me.
+
+So I am just gonna sleep now, not think about it. GOOOOOOOOOOOD NIGHT.
+
+
+`,
+			"l": "LKJ"
+        };
+
+        // --- 2. RENDER LOGIC ---
+        const container = document.getElementById('posts-container');
+
+        // Helper to format date
+        const formatDate = (dateString) => {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        };
+
+        // Render single post
+        function renderPost() {
+            container.innerHTML = `
+                <article class="animate-fade-in">
+                    <header>
+                        <h2 class="text-3xl sm:text-4xl mb-3 text-[var(--text-primary)]">
+                            ${blogPost.title}
+                        </h2>
+                        <div class="meta-text">
+                            ${formatDate(blogPost.created_at)}
+                        </div>
+                    </header>
+                    <div class="prose prose-lg text-[var(--text-primary)] leading-relaxed">
+                        <p>${blogPost.content}</p>
+                    </div>
+                </article>
+            `;
+        }
+
+        // --- 3. THEME & FONT LOGIC ---
+        
+        function updateActiveButton(parentId, classSelector) {
+            const parent = document.getElementById(parentId);
+            const buttons = parent.querySelectorAll('button');
+            
+            if (parentId === 'theme-toggles') {
+                buttons.forEach(btn => {
+                   if(btn.classList.contains(`theme-btn-${classSelector}`)) {
+                       btn.classList.add('active');
+                   } else {
+                       btn.classList.remove('active');
+                   }
+                });
+            } 
+            else {
+                 buttons.forEach(btn => {
+                   if(btn.getAttribute('onclick').includes(classSelector)) {
+                       btn.classList.add('active');
+                   } else {
+                       btn.classList.remove('active');
+                   }
+                });
+            }
+        }
+
+        function setTheme(themeName) {
+            document.body.setAttribute('data-theme', themeName);
+            updateActiveButton('theme-toggles', themeName);
+            localStorage.setItem('blogTheme', themeName);
+        }
+
+        function setFont(fontName) {
+            const body = document.body;
+            body.classList.remove('font-sans-system', 'font-serif-times', 'font-roboto');
+
+            if (fontName === 'sans') body.classList.add('font-sans-system');
+            if (fontName === 'serif') body.classList.add('font-serif-times');
+            if (fontName === 'roboto') body.classList.add('font-roboto');
+
+            updateActiveButton('font-toggles', fontName);
+            localStorage.setItem('blogFont', fontName);
+        }
+
+        // --- 4. INITIALIZATION ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPost();
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const savedTheme = localStorage.getItem('blogTheme') || 'light';
+            const savedFont = localStorage.getItem('blogFont') || 'sans';
+
+            setTheme(savedTheme);
+            setFont(savedFont);
+        });
+
+    </script>
+</body>
+</html>
