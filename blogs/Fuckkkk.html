@@ -7,8 +7,6 @@
   <title>advait.pro</title>
   <!-- Tailwind CSS for layout utilities -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Roboto -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <link href="https://i.postimg.cc/hGLcg8gT/icon.png" rel="icon">
 
   <style>
@@ -57,7 +55,6 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-primary);
-      transition: background-color var(--transition-speed), color var(--transition-speed);
       -webkit-font-smoothing: antialiased;
       line-height: 1.6;
     }
@@ -71,9 +68,6 @@
       font-family: "Times New Roman", Times, serif;
     }
 
-    .font-roboto {
-      font-family: 'Roboto', sans-serif;
-    }
 
     /* Typography */
     h1,
@@ -114,7 +108,6 @@
       /* Pill shape */
       padding: 4px 8px;
       gap: 8px;
-      transition: background-color var(--transition-speed), border-color var(--transition-speed);
     }
 
     /* Font Button Styles */
@@ -126,7 +119,6 @@
       border-radius: 6px;
       font-size: 1rem;
       color: var(--text-secondary);
-      transition: all 0.2s ease;
       line-height: 1;
     }
 
@@ -149,7 +141,6 @@
       border-radius: 50%;
       border: 1px solid var(--theme-btn-border);
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
       position: relative;
       opacity: 0.4;
       /* Dimmed by default */
@@ -207,7 +198,6 @@
     <div class="control-group" id="font-toggles">
       <button class="font-btn font-sans-system active" onclick="setFont('sans')">Aa</button>
       <button class="font-btn font-serif-times" onclick="setFont('serif')">Aa</button>
-      <button class="font-btn font-roboto" onclick="setFont('roboto')">Aa</button>
     </div>
   </div>
 
@@ -337,11 +327,15 @@ So I am just gonna sleep now, not think about it. GOOOOOOOOOOOD NIGHT.
 
     function setFont(fontName) {
       const body = document.body;
-      body.classList.remove('font-sans-system', 'font-serif-times', 'font-roboto');
 
-      if (fontName === 'sans') body.classList.add('font-sans-system');
-      if (fontName === 'serif') body.classList.add('font-serif-times');
-      if (fontName === 'roboto') body.classList.add('font-roboto');
+      if (fontName === 'sans') {
+        body.classList.add('font-sans-system');
+        body.classList.remove('font-serif-times')
+      }
+      if (fontName === 'serif') {
+        body.classList.add('font-serif-times');
+        body.classList.remove('font-sans-times')
+      }
 
       updateActiveButton('font-toggles', fontName);
       localStorage.setItem('blogFont', fontName);

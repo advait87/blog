@@ -55,7 +55,6 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-primary);
-      transition: background-color var(--transition-speed), color var(--transition-speed);
       -webkit-font-smoothing: antialiased;
       line-height: 1.6;
     }
@@ -109,7 +108,6 @@
       /* Pill shape */
       padding: 4px 8px;
       gap: 8px;
-      transition: background-color var(--transition-speed), border-color var(--transition-speed);
     }
 
     /* Font Button Styles */
@@ -121,7 +119,6 @@
       border-radius: 6px;
       font-size: 1rem;
       color: var(--text-secondary);
-      transition: all 0.2s ease;
       line-height: 1;
     }
 
@@ -144,7 +141,6 @@
       border-radius: 50%;
       border: 1px solid var(--theme-btn-border);
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
       position: relative;
       opacity: 0.4;
       /* Dimmed by default */
@@ -315,8 +311,14 @@ Adios!
     function setFont(fontName) {
       const body = document.body;
 
-      if (fontName === 'sans') body.classList.add('font-sans-system');
-      if (fontName === 'serif') body.classList.add('font-serif-times');
+      if (fontName === 'sans') {
+        body.classList.add('font-sans-system');
+        body.classList.remove('font-serif-times')
+      }
+      if (fontName === 'serif') {
+        body.classList.add('font-serif-times');
+        body.classList.remove('font-sans-times')
+      }
 
       updateActiveButton('font-toggles', fontName);
       localStorage.setItem('blogFont', fontName);
