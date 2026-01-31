@@ -1,1 +1,1 @@
-/Users/rick/blog/github_action/target/debug/github_action: /Users/rick/blog/github_action/src/main.rs /Users/rick/blog/github_action/src/template.html
+/Users/rick/blog/github_action/target/debug/github_action: /Users/rick/blog/github_action/src/main.rs /Users/rick/blog/github_action/src/templates/blog.html /Users/rick/blog/github_action/src/templates/index.html
