@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>advait.pro</title>
+  <!-- Tailwind CSS for layout utilities -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://i.postimg.cc/hGLcg8gT/icon.png" rel="icon">
+
+  <style>
+    /* --- Theming Logic --- */
+    :root {
+      --transition-speed: 0.3s;
+    }
+
+    /* Light Theme (Default) */
+    body[data-theme="light"] {
+      --bg-color: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --accent-color: #2563eb;
+      /* Blue-600 */
+      --ui-bg: #f3f4f6;
+      --ui-border: #e5e7eb;
+      --theme-btn-border: #d1d5db;
+    }
+
+    /* Dark Theme */
+    body[data-theme="dark"] {
+      --bg-color: #121212;
+      --text-primary: #e5e5e5;
+      --text-secondary: #a3a3a3;
+      --accent-color: #60a5fa;
+      /* Blue-400 */
+      --ui-bg: #262626;
+      --ui-border: #404040;
+      --theme-btn-border: #525252;
+    }
+
+    /* Sepia Theme */
+    body[data-theme="sepia"] {
+      --bg-color: #f4ecd8;
+      --text-primary: #433422;
+      --text-secondary: #7e6a52;
+      --accent-color: #d97706;
+      /* Amber-600 */
+      --ui-bg: #e6dac3;
+      --ui-border: #d1c7b7;
+      --theme-btn-border: #c2b5a3;
+    }
+
+    /* --- Global Styles --- */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* Font Classes */
+    .font-sans-system {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    .font-serif-times {
+      font-family: "Times New Roman", Times, serif;
+    }
+
+
+    /* Typography */
+    p {
+      white-space: pre-line;
+      margin-bottom: 1.5rem;
+    }
+
+    /* --- Modern Controls --- */
+    .controls-wrapper {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 12px;
+      z-index: 50;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      background-color: var(--ui-bg);
+      border: 1px solid var(--ui-border);
+      border-radius: 9999px;
+      /* Pill shape */
+      padding: 4px 8px;
+      gap: 8px;
+    }
+
+    /* Font Button Styles */
+    .font-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1;
+    }
+
+    .font-btn:hover {
+      color: var(--text-primary);
+      background-color: rgba(125, 125, 125, 0.1);
+    }
+
+    .font-btn.active {
+      color: var(--text-primary);
+      font-weight: bold;
+      /* text-decoration: underline; */
+      /* text-underline-offset: 4px; */
+    }
+
+    /* Theme Color Button Styles */
+    .theme-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid var(--theme-btn-border);
+      cursor: pointer;
+      position: relative;
+      opacity: 0.4;
+      /* Dimmed by default */
+    }
+
+    .theme-btn:hover {
+      opacity: 0.7;
+    }
+
+    .theme-btn.active {
+      opacity: 1;
+      /* Fully visible when active */
+      transform: scale(1.1);
+      /* Removed the extra box-shadow border */
+    }
+
+    /* Specific colors for the buttons so they look same regardless of current theme */
+    .theme-btn-light {
+      background-color: #ffffff;
+    }
+
+    .theme-btn-sepia {
+      background-color: #f4ecd8;
+    }
+
+    .theme-btn-dark {
+      background-color: #121212;
+    }
+
+    /* Mobile Adjustment for controls */
+    @media (max-width: 640px) {
+      .controls-wrapper {
+        position: absolute;
+        top: 10px;
+        right: 50%;
+        transform: translateX(50%);
+        width: max-content;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="light" class="font-sans-system min-h-screen flex flex-col">
+
+  <!-- Controls (Fixed Top Right) -->
+  <div class="controls-wrapper">
+    <!-- Theme Toggle (Circles) -->
+    <div class="control-group" id="theme-toggles">
+      <button class="theme-btn theme-btn-light active" onclick="setTheme('light')" aria-label="Light Mode"></button>
+      <button class="theme-btn theme-btn-sepia" onclick="setTheme('sepia')" aria-label="Sepia Mode"></button>
+      <button class="theme-btn theme-btn-dark" onclick="setTheme('dark')" aria-label="Dark Mode"></button>
+    </div>
+
+    <!-- Font Toggle (Aa) -->
+    <div class="control-group" id="font-toggles">
+      <button class="font-btn font-sans-system active" onclick="setFont('sans')">Aa</button>
+      <button class="font-btn font-serif-times" onclick="setFont('serif')">Aa</button>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <!-- mx-auto centers the container, text-left keeps text aligned left -->
+  <main class="flex-grow w-full max-w-2xl mx-auto px-6 py-24 sm:py-32 text-left">
+
+    <!-- Blog Post Container (Single Post) -->
+    <div id="posts-container" class="min-h-[300px]">
+      <!-- Post injected here -->
+    </div>
+
+  </main>
+
+
+  <script>
+    // --- 1. MOCK DATA (Single Post) ---
+    // Replace this object with your JSON data
+    const blogPost = {
+      "title": "",
+      "created_at": "",
+      "content": ""
+
+    };
+
+    // --- 2. RENDER LOGIC ---
+    const container = document.getElementById('posts-container');
+
+    // Helper to format date
+
+    // Render single post
+    function renderPost() {
+      container.innerHTML = `
+                <article class="animate-fade-in">
+                    <header>
+                        <h2 class="text-3xl sm:text-4xl mb-3 text-[var(--text-primary)]">
+                            ${blogPost.title}
+                        </h2>
+                    </header>
+                    <div class="prose prose-lg text-[var(--text-primary)] leading-relaxed">
+                        <p>${blogPost.content}</p>
+                    </div>
+                </article>
+            `;
+    }
+
+    // --- 3. THEME & FONT LOGIC ---
+
+    function updateActiveButton(parentId, classSelector) {
+      const parent = document.getElementById(parentId);
+      const buttons = parent.querySelectorAll('button');
+
+      if (parentId === 'theme-toggles') {
+        buttons.forEach(btn => {
+          if (btn.classList.contains(`theme-btn-${classSelector}`)) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+      else {
+        buttons.forEach(btn => {
+          if (btn.getAttribute('onclick').includes(classSelector)) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+    }
+
+    function setTheme(themeName) {
+      document.body.setAttribute('data-theme', themeName);
+      updateActiveButton('theme-toggles', themeName);
+      localStorage.setItem('blogTheme', themeName);
+    }
+
+    function setFont(fontName) {
+      const body = document.body;
+
+      if (fontName === 'sans') {
+        body.classList.add('font-sans-system');
+        body.classList.remove('font-serif-times')
+      }
+      if (fontName === 'serif') {
+        body.classList.add('font-serif-times');
+        body.classList.remove('font-sans-times')
+      }
+
+      updateActiveButton('font-toggles', fontName);
+      localStorage.setItem('blogFont', fontName);
+    }
+
+    // --- 4. INITIALIZATION ---
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPost();
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const savedTheme = localStorage.getItem('blogTheme') || 'light';
+      const savedFont = localStorage.getItem('blogFont') || 'sans';
+
+      setTheme(savedTheme);
+      setFont(savedFont);
+    });
+
+  </script>
+</body>
+
+</html>

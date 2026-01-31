@@ -1,0 +1,127 @@
+:root {
+  --transition-speed: 0.3s;
+}
+
+/* Light Theme */
+body[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --accent-color: #2563eb;
+  --ui-bg: #f3f4f6;
+  --ui-border: #e5e7eb;
+  --theme-btn-border: #d1d5db;
+}
+
+/* Dark Theme */
+body[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-primary: #e5e5e5;
+  --text-secondary: #a3a3a3;
+  --accent-color: #60a5fa;
+  --ui-bg: #262626;
+  --ui-border: #404040;
+  --theme-btn-border: #525252;
+}
+
+/* Sepia Theme */
+body[data-theme="sepia"] {
+  --bg-color: #f4ecd8;
+  --text-primary: #433422;
+  --text-secondary: #7e6a52;
+  --accent-color: #d97706;
+  --ui-bg: #e6dac3;
+  --ui-border: #d1c7b7;
+  --theme-btn-border: #c2b5a3;
+}
+
+/* Base */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background-color var(--transition-speed),
+    color var(--transition-speed);
+}
+
+/* Fonts */
+.font-sans-system {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.font-serif-times {
+  font-family: "Times New Roman", Times, serif;
+}
+
+p {
+  white-space: pre-line;
+  margin-bottom: 1.5rem;
+}
+
+/* Controls */
+.controls-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 12px;
+  z-index: 50;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  background-color: var(--ui-bg);
+  border: 1px solid var(--ui-border);
+  border-radius: 9999px;
+  padding: 4px 8px;
+  gap: 8px;
+}
+
+.font-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.font-btn.active {
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.theme-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--theme-btn-border);
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.theme-btn.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.theme-btn-light {
+  background: #fff;
+}
+
+.theme-btn-sepia {
+  background: #f4ecd8;
+}
+
+.theme-btn-dark {
+  background: #121212;
+}
+
+@media (max-width: 640px) {
+  .controls-wrapper {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
