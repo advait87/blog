@@ -84,7 +84,7 @@ fn gen_index() -> std::io::Result<()> {
                 created_at = line;
             } else {
                 content.push_str(&line);
-                content.push(' ');
+                content.push('\n');
             }
         }
 
