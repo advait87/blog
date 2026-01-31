@@ -35,7 +35,7 @@ posts.forEach(post => {
       <p>${post.content}</p>
     </div>
 
-    <a href="mydomain/blog/${post.filename}" class="read-more-link">
+    <a href="https://advait.pro/blog/${post.filename}" class="read-more-link">
       Read full post <span class="read-more-arrow">&rarr;</span>
     </a>
   `;
