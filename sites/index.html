@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium Pastel Quiz</title>
+    <style>
+        :root {
+            --bg-grad-1: #e0c3fc;
+            --bg-grad-2: #8ec5fc;
+            --surface: rgba(255, 255, 255, 0.65);
+            --surface-hover: rgba(255, 255, 255, 0.85);
+            --border: rgba(255, 255, 255, 0.4);
+            --text-main: #2d3748;
+            --text-muted: #4a5568;
+
+            --pastel-blue: rgba(169, 197, 239, 0.8);
+            --pastel-green: rgba(186, 235, 186, 0.85);
+            --pastel-red: rgba(250, 190, 190, 0.85);
+            --pastel-yellow: rgba(254, 244, 219, 0.9);
+
+            --shadow-soft: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            --shadow-hover: 0 12px 40px 0 rgba(31, 38, 135, 0.12);
+            --border-rad: 24px;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism abstract shapes */
+        .shape {
+            position: absolute;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            top: -10%;
+            left: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: #ffb6c1;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #b0e0e6;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1.05);
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #app {
+            width: 100%;
+            max-width: 460px;
+            height: 100vh;
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+        }
+
+        @media (min-width: 481px) {
+            #app {
+                height: 85vh;
+                max-height: 850px;
+                border-radius: var(--border-rad);
+                border: 1px solid var(--border);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 22px 0;
+            text-align: center;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .tab.active {
+            background: var(--surface-hover);
+            color: var(--text-main);
+            box-shadow: inset 0 -4px 0 0 #5c88c7;
+        }
+
+        /* Views */
+        .view {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 24px;
+            box-sizing: border-box;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .flex-center {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-top: auto;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(4px);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-blue {
+            background: var(--pastel-blue);
+            color: #2a4365;
+        }
+
+        .btn-blue:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            background: #96b8e8;
+        }
+
+        .btn-yellow {
+            background: var(--pastel-yellow);
+            color: #744210;
+        }
+
+        .btn-yellow:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            background: #fce8b2;
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+        /* Options */
+        .progress {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(255, 255, 255, 0.4);
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            align-self: flex-start;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 32px;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .option {
+            background: var(--surface-hover);
+            padding: 20px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .option.selected {
+            border-color: #5c88c7;
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(92, 136, 199, 0.2);
+        }
+
+        .option.correct {
+            background: var(--pastel-green);
+            border-color: #68b368;
+            color: #1c451c;
+            transform: scale(1.02);
+        }
+
+        .option.incorrect {
+            background: var(--pastel-red);
+            border-color: #d66565;
+            color: #611e1e;
+            animation: shake 0.4s;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-4px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        .wait-msg {
+            text-align: center;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 1.25rem;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                opacity: 0.6;
+                transform: scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.02);
+            }
+        }
+
+        /* Results */
+        .result-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            text-align: left;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .result-q {
+            font-weight: 800;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .result-a {
+            font-size: 1rem;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .final-score {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 32px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #4a6fa5, #8ec5fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <div id="app">
+        <!-- Home View -->
+        <div id="view-home" class="view" style="padding: 0;">
+            <div class="tabs">
+                <div class="tab active" id="tab-normal" onclick="selectTab('normal')">Normal Mode</div>
+                <div class="tab" id="tab-gap" onclick="selectTab('gap')">Gap Mode</div>
+            </div>
+            <div class="view flex-center">
+                <h2 id="mode-title">Normal Mode</h2>
+                <p id="mode-desc">20 continuous questions.<br><br>Concludes with a fast-paced 7 random question recap.
+                </p>
+                <div style="flex-grow: 1;"></div>
+                <button class="btn btn-blue" onclick="startQuiz()">Begin Journey</button>
+            </div>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="view-quiz" class="view hidden">
+            <div class="progress" id="quiz-progress">Phase 1: 1 / 20</div>
+            <div class="question" id="quiz-question">Loading Question...</div>
+            <div class="options" id="quiz-options"></div>
+
+            <div style="flex-grow: 1;"></div>
+
+            <button id="btn-submit" class="btn btn-blue" onclick="submitAnswer()" disabled>Confirm Answer</button>
+            <div id="wait-msg" class="wait-msg hidden">Next question in <span id="wait-time">5</span>s...</div>
+            <button id="btn-next" class="btn btn-yellow hidden" onclick="nextQuestion()">Next Question</button>
+        </div>
+
+        <!-- Interstitial View -->
+        <div id="view-interstitial" class="view hidden flex-center">
+            <h2>Phase 1 Complete!</h2>
+            <p>You will now face 7 questions randomly picked from the previous round to test your memory.</p>
+            <p style="font-weight: 800; color: #4a6fa5; font-size: 1.2rem; margin-top: 24px;">No gap effect for this
+                phase.</p>
+            <div style="flex-grow: 1;"></div>
+            <button class="btn btn-blue" onclick="startPhase2()">Start Final Test</button>
+        </div>
+
+        <!-- Results View -->
+        <div id="view-results" class="view hidden">
+            <h2 style="text-align: center; margin-bottom: 8px;">Final Results</h2>
+            <p style="text-align: center; margin-top: 0; font-weight: 600;">Your answers for the final 7 questions:</p>
+
+            <div id="results-list"
+                style="overflow-y: auto; flex-grow: 1; padding-bottom: 20px; padding-right: 8px; margin-top: 20px;">
+            </div>
+
+            <div class="final-score" id="final-score">0 / 7</div>
+            <button class="btn btn-blue" onclick="resetApp()">Refresh Page</button>
+        </div>
+    </div>
+
+    <script>
+        const normalQuestions = [
+            { q: "What is the capital of France?", o: ["Berlin", "Madrid", "Paris", "Rome"], a: 2 },
+            { q: "Which planet is known as the Red Planet?", o: ["Earth", "Mars", "Jupiter", "Saturn"], a: 1 },
+            { q: "Who wrote 'Hamlet'?", o: ["Charles Dickens", "William Shakespeare", "Mark Twain", "Jane Austen"], a: 1 },
+            { q: "What is the largest ocean on Earth?", o: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], a: 3 },
+            { q: "Which element has the chemical symbol 'O'?", o: ["Gold", "Oxygen", "Osmium", "Oganesson"], a: 1 },
+            { q: "What is the square root of 64?", o: ["6", "7", "8", "9"], a: 2 },
+            { q: "Which bird is known for its beautiful tail?", o: ["Crow", "Peacock", "Pigeon", "Sparrow"], a: 1 },
+            { q: "What is the capital of Japan?", o: ["Seoul", "Beijing", "Tokyo", "Bangkok"], a: 2 },
+            { q: "How many continents are there?", o: ["5", "6", "7", "8"], a: 2 },
+            { q: "Which primary color is produced by mixing blue and yellow?", o: ["Green", "Purple", "Red", "Brown"], a: 0 },
+            { q: "What is the hardest natural substance?", o: ["Gold", "Iron", "Diamond", "Quartz"], a: 2 },
+            { q: "Which gas do plants absorb?", o: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"], a: 1 },
+            { q: "How many legs does a spider have?", o: ["6", "8", "10", "12"], a: 1 },
+            { q: "What is the tallest mountain on Earth?", o: ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"], a: 2 },
+            { q: "Who painted the Mona Lisa?", o: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"], a: 2 },
+            { q: "What type of animal is a frog?", o: ["Reptile", "Mammal", "Amphibian", "Bird"], a: 2 },
+            { q: "Which country has a shape similar to a boot?", o: ["Spain", "Italy", "Greece", "Mexico"], a: 1 },
+            { q: "What is the main ingredient in guacamole?", o: ["Tomato", "Avocado", "Onion", "Pepper"], a: 1 },
+            { q: "How many days are in a leap year?", o: ["364", "365", "366", "367"], a: 2 },
+            { q: "What is the freezing point of water in Celsius?", o: ["0", "32", "100", "-1"], a: 0 }
+        ];
+
+        const gapQuestions = [
+            { q: "What is the chemical formula for water?", o: ["H2O", "CO2", "O2", "NaCl"], a: 0 },
+            { q: "Which planet is closest to the Sun?", o: ["Venus", "Earth", "Mercury", "Mars"], a: 2 },
+            { q: "Who is known as the father of modern physics?", o: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Nikola Tesla"], a: 1 },
+            { q: "What is the capital of Australia?", o: ["Sydney", "Melbourne", "Canberra", "Perth"], a: 2 },
+            { q: "What is the largest mammal?", o: ["Elephant", "Blue Whale", "Giraffe", "Shark"], a: 1 },
+            { q: "Which is the smallest prime number?", o: ["0", "1", "2", "3"], a: 2 },
+            { q: "What language is the most spoken worldwide by native speakers?", o: ["English", "Mandarin", "Spanish", "Hindi"], a: 1 },
+            { q: "Who discovered penicillin?", o: ["Marie Curie", "Alexander Fleming", "Louis Pasteur", "Gregor Mendel"], a: 1 },
+            { q: "Which shape has five sides?", o: ["Hexagon", "Pentagon", "Octagon", "Square"], a: 1 },
+            { q: "What is the official currency of the UK?", o: ["Euro", "Dollar", "Pound", "Yen"], a: 2 },
+            { q: "Which part of the plant conducts photosynthesis?", o: ["Root", "Stem", "Leaf", "Flower"], a: 2 },
+            { q: "How many bones are in the adult human body?", o: ["206", "205", "201", "210"], a: 0 },
+            { q: "What is the boiling point of water in Fahrenheit?", o: ["100", "212", "150", "300"], a: 1 },
+            { q: "What is the capital of Canada?", o: ["Toronto", "Vancouver", "Montreal", "Ottawa"], a: 3 },
+            { q: "Which organ pumps blood in the human body?", o: ["Brain", "Lungs", "Heart", "Liver"], a: 2 },
+            { q: "Who wrote '1984'?", o: ["George Orwell", "Aldous Huxley", "F. Scott Fitzgerald", "Ernest Hemingway"], a: 0 },
+            { q: "What is the fastest land animal?", o: ["Lion", "Cheetah", "Horse", "Leopard"], a: 1 },
+            { q: "Which metal is liquid at room temperature?", o: ["Iron", "Mercury", "Gold", "Lead"], a: 1 },
+            { q: "How many players are in a standard soccer team on the field?", o: ["9", "10", "11", "12"], a: 2 },
+            { q: "Which is the largest hot desert in the world?", o: ["Sahara", "Gobi", "Kalahari", "Sonoran"], a: 0 }
+        ];
+
+        let appMode = 'normal'; // 'normal' | 'gap'
+        let currentPhase = 'initial'; // 'initial' | 'final'
+        let qIndex = 0;
+        let baseQuestions = [];
+        let activeQuestions = [];
+        let userFinalAnswers = [];
+
+        let selectedOpt = null;
+        let submitted = false;
+
+        function showView(viewId) {
+            ['view-home', 'view-quiz', 'view-interstitial', 'view-results'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        function selectTab(mode) {
+            appMode = mode;
+            document.getElementById('tab-normal').classList.toggle('active', mode === 'normal');
+            document.getElementById('tab-gap').classList.toggle('active', mode === 'gap');
+
+            if (mode === 'normal') {
+                document.getElementById('mode-title').innerText = 'Normal Mode';
+                document.getElementById('mode-desc').innerHTML = '20 continuous questions.<br><br>Concludes with a fast-paced 7 random question recap.';
+            } else {
+                document.getElementById('mode-title').innerText = 'Gap Mode';
+                document.getElementById('mode-desc').innerHTML = '1 question at a time.<br>5 second mental gap after answering each.<br><br>Concludes with a fast-paced 7 random question recap.';
+            }
+        }
+
+        function startQuiz() {
+            baseQuestions = appMode === 'normal' ? [...normalQuestions] : [...gapQuestions];
+            // Shuffle
+            baseQuestions.sort(() => 0.5 - Math.random());
+
+            currentPhase = 'initial';
+            activeQuestions = [...baseQuestions];
+            qIndex = 0;
+            userFinalAnswers = [];
+
+            showView('view-quiz');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            selectedOpt = null;
+            submitted = false;
+
+            const countStr = currentPhase === 'initial' ? `Phase 1: ${qIndex + 1} / 20` : `Final Phase: ${qIndex + 1} / 7`;
+            document.getElementById('quiz-progress').innerText = countStr;
+
+            const qData = activeQuestions[qIndex];
+            // Force animation reset
+            const qEl = document.getElementById('quiz-question');
+            qEl.style.animation = 'none';
+            qEl.offsetHeight; // trigger reflow
+            qEl.style.animation = 'fadeIn 0.4s';
+            qEl.innerText = qData.q;
+
+            const optsContainer = document.getElementById('quiz-options');
+            optsContainer.innerHTML = '';
+
+            qData.o.forEach((optText, idx) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.style.animation = `fadeIn 0.4s ${idx * 0.05}s backwards`;
+                div.innerHTML = `<span>${optText}</span><span style="opacity: 0.3; font-size: 0.9em;">${['A', 'B', 'C', 'D'][idx]}</span>`;
+                div.onclick = () => selectOption(idx);
+                optsContainer.appendChild(div);
+            });
+
+            document.getElementById('btn-submit').classList.remove('hidden');
+            // Show submit if some option is already selected (it resets, so it disables here)
+            document.getElementById('btn-submit').disabled = true;
+
+            document.getElementById('btn-next').classList.add('hidden');
+            document.getElementById('wait-msg').classList.add('hidden');
+        }
+
+        function selectOption(idx) {
+            if (submitted) return;
+            selectedOpt = idx;
+            const opts = document.getElementById('quiz-options').children;
+            for (let i = 0; i < opts.length; i++) {
+                opts[i].classList.remove('selected');
+            }
+            opts[idx].classList.add('selected');
+            document.getElementById('btn-submit').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (selectedOpt === null || submitted) return;
+            submitted = true;
+
+            document.getElementById('btn-submit').classList.add('hidden');
+
+            const qData = activeQuestions[qIndex];
+            const opts = document.getElementById('quiz-options').children;
+
+            for (let i = 0; i < opts.length; i++) {
+                opts[i].classList.add('disabled');
+                if (i === qData.a) {
+                    opts[i].classList.add('correct');
+                } else if (i === selectedOpt) {
+                    opts[i].classList.add('incorrect');
+                }
+            }
+
+            const isCorrect = (selectedOpt === qData.a);
+
+            if (currentPhase === 'final') {
+                userFinalAnswers.push({
+                    q: qData.q,
+                    userAns: qData.o[selectedOpt],
+                    correctAns: qData.o[qData.a],
+                    isCorrect: isCorrect
+                });
+            }
+
+            if (currentPhase === 'initial' && appMode === 'gap') {
+                document.getElementById('wait-msg').classList.remove('hidden');
+                document.getElementById('wait-time').innerText = '5';
+
+                let counter = 5;
+                const interval = setInterval(() => {
+                    counter--;
+                    if (counter > 0) {
+                        document.getElementById('wait-time').innerText = counter;
+                    } else {
+                        clearInterval(interval);
+                        document.getElementById('wait-msg').classList.add('hidden');
+                        document.getElementById('btn-next').classList.remove('hidden');
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('btn-next').classList.remove('hidden');
+            }
+        }
+
+        function nextQuestion() {
+            qIndex++;
+            if (qIndex < activeQuestions.length) {
+                loadQuestion();
+            } else {
+                if (currentPhase === 'initial') {
+                    showView('view-interstitial');
+                    // Prepare final 7 from the 20 just shown
+                    let shuffled = [...baseQuestions].sort(() => 0.5 - Math.random());
+                    activeQuestions = shuffled.slice(0, 7);
+                } else {
+                    showResults();
+                }
+            }
+        }
+
+        function startPhase2() {
+            currentPhase = 'final';
+            qIndex = 0;
+            showView('view-quiz');
+            loadQuestion();
+        }
+
+        function showResults() {
+            showView('view-results');
+
+            const list = document.getElementById('results-list');
+            list.innerHTML = '';
+
+            let correctCount = 0;
+
+            userFinalAnswers.forEach((ans, i) => {
+                if (ans.isCorrect) correctCount++;
+
+                const item = document.createElement('div');
+                item.className = 'result-item';
+                item.style.animation = `fadeIn 0.5s ${i * 0.1}s backwards`;
+
+                const ansColor = ans.isCorrect ? '#1c451c' : '#8c3b3b';
+
+                let html = `
+                    <div class="result-q">${i + 1}. ${ans.q}</div>
+                    <div class="result-a">Your answer: <span style="color: ${ansColor}; font-weight: 800;">${ans.userAns}</span></div>
+                `;
+                if (!ans.isCorrect) {
+                    html += `<div style="color: #1c451c; font-size: 0.95em; font-weight: 800; margin-top: 6px;">Correct answer: ${ans.correctAns}</div>`;
+                }
+
+                item.innerHTML = html;
+                list.appendChild(item);
+            });
+
+            document.getElementById('final-score').innerText = `${correctCount} / 7`;
+        }
+
+        function resetApp() {
+            // Refresh the page based on user request
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>
