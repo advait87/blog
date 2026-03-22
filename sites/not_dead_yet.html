@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>advait.pro</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://i.postimg.cc/hGLcg8gT/icon.png" rel="icon">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/advait87/blog@main/sites/style.css">
+</head>
+
+<body data-theme="light" class="font-sans-system min-h-screen flex flex-col">
+
+  <main class="flex-grow w-full max-w-2xl mx-auto px-6 py-24 sm:py-32 text-left">
+    <div id="posts-container"></div>
+  </main>
+
+  <!-- Injected data -->
+  <script>
+    window.BLOG_POST = {
+      title: "I'm not dead yet",
+      created_at: "March 22, 2026",
+      content: `
+I just wanted to clarify, that just because I didn't blog for a while, doesn't mean that I'm dead. I have seen these kind of allegations float a lot, specially during the Iran Israel America threeway. The logic is, "He is quiet, so he's dead". Well I am not, also this blog is not written by any AI that was told to write in my own style. AI is not there yet, won't ever be. 
+
+Now that we have all the conspiracies out of the way, let me write some random things about my life.
+
+I am launching a new app. It's called dvait (don't ask why). The idea is that whatever you use on your computer, in this case your smartphone actually, it tracks that information, and you can query that information, ask questions, potentially do tasks(upcoming feature, idk). If you know Windows recall, it's like that. The thing is, it's open source. I want to do it hybrid style, like the backend will be closed source and the frontend will be open source(by frontend I mean the app, the client app). But this may still raise privacy concerns, so for that, I've got 2 solutions:
+
+1. Clearly state in the privacy policy that I'm a good guy and more / less importantly, the server won't store any data coming from the user, not even for training, not even anonymous, just not.
+2. You can bring your own API key from Groq and use their models with ZDA(Zero D-something A-something). Basically, they don't store any of their data. I hope you can trust Groq, they seem very cool to me.
+
+I also want to have local LLM support, but I haven't been able to test it, cause I've got a Galaxy S10. Maybe when I'll get some money I will get my hands on powerful phones and do local inference. I do want it, no doubt about that. I know a vast majority of people won't be able to get the benefit from it, as most people are neither super caring about their privacy, specially when seeing a privacy centric approach like I'm taking, nor do they have the highest end flagships to do local inference. But it's us, the Geeks' job to take the technology forward. (Attach my photo here with a hand pointing to the sky and wearing a cape and a mask).
+
+Aside from that, well, this is my attempt to become rich, no doubt about that. I'm tired of eating mess food and living in a kinda jail like IITGN (for me at least). I wanna go to Udaipur, Kerala, Spain. Anyways.
+
+
+So that's that, also a pro version is coming soon...
+`
+    };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/advait87/blog@main/sites/script.js"></script>
+</body>
+
+</html>
