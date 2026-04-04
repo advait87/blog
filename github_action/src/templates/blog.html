@@ -158,6 +158,8 @@
       document.body.classList.toggle("font-serif-times", font === "serif");
       localStorage.setItem("blogFont", font);
     }
+    const savedTheme = localStorage.getItem("blogTheme") || "light";
+    const savedFont = localStorage.getItem("blogFont") || "sans";
     setTheme(savedTheme);
     setFont(savedFont);
   </script>
@@ -213,8 +215,6 @@
 
     // ---------------- INIT ----------------
 
-    const savedTheme = localStorage.getItem("blogTheme") || "light";
-    const savedFont = localStorage.getItem("blogFont") || "sans";
 
   </script>
 </body>
