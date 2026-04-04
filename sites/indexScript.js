@@ -56,5 +56,5 @@ function setFont(font) {
 }
 
 // -------- INIT --------
-setTheme(localStorage.getItem("blogTheme") || "light");
-setFont(localStorage.getItem("blogFont") || "sans");
+// setTheme(localStorage.getItem("blogTheme") || "light");
+// setFont(localStorage.getItem("blogFont") || "sans");
