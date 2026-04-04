@@ -146,6 +146,21 @@
     <div id="posts-container"></div>
   </main>
 
+  <script>
+    function setTheme(theme) {
+      document.body.setAttribute("data-theme", theme);
+      localStorage.setItem("blogTheme", theme);
+      updateThemeButtons(theme);
+    }
+
+    function setFont(font) {
+      document.body.classList.toggle("font-sans-system", font === "sans");
+      document.body.classList.toggle("font-serif-times", font === "serif");
+      localStorage.setItem("blogFont", font);
+    }
+    setTheme(savedTheme);
+    setFont(savedFont);
+  </script>
   <!-- Injected data -->
   <script>
     window.BLOG_POST = {
@@ -189,17 +204,6 @@
 
     // ---------------- THEME / FONT LOGIC ----------------
 
-    function setTheme(theme) {
-      document.body.setAttribute("data-theme", theme);
-      localStorage.setItem("blogTheme", theme);
-      updateThemeButtons(theme);
-    }
-
-    function setFont(font) {
-      document.body.classList.toggle("font-sans-system", font === "sans");
-      document.body.classList.toggle("font-serif-times", font === "serif");
-      localStorage.setItem("blogFont", font);
-    }
 
     function updateThemeButtons(theme) {
       document.querySelectorAll(".theme-btn").forEach(btn =>
@@ -212,8 +216,6 @@
     const savedTheme = localStorage.getItem("blogTheme") || "light";
     const savedFont = localStorage.getItem("blogFont") || "sans";
 
-    setTheme(savedTheme);
-    setFont(savedFont);
   </script>
 </body>
 
