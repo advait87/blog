@@ -1,0 +1,20 @@
+12 Hours Challenge
+Friday, April 17 2026
+
+So this is not going to be exactly 12 hour challenge, as the current time is 1329, and I'll take breaks in between, but it sounds better this way.
+Let's start
+
+1330: Need to read firebase docs and implement GAuth for caretakers
+1427: Auth is finally done. I would've hoped this took like half the time compared to what I dedicated it to be. Now time to do the caretaker database thing and admin login thing. Let's to admin login thing. I'm going a very DFS approach in this project. For this feature to work, what's needed, another feature, let's build that instead of putting it for later and completing this one.
+1514: I'm implementing my own auth for admin, looks fun. PSQL is not working again😭😭😭
+1539: Need to make poster for the project course. Will do that for 45 mins after this 5 minute break.
+1636: Snacks time
+1800: Break ran a little long🥲, starting now.
+2252: I've started working about 15 minutes before. Shit happened, don't wanna talk about it now, wanna work.
+
+
+So this is a new 12 hour challenge, this time on April 18th. I'm making the hostel recipts portal. I know the time isn't enough(cause I'm rolling my own auth and database, super chad), but ig 12 hours should be much more than enought for this.
+
+1226: Time for a break, not more than 10 minutes, then maybe I'll have lunch, let's see
+1339: Starting to work on the CDS portal
+1609: Now I'm starting on Graphite
