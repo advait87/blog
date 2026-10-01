@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/advait87/blog@main/sites/indexStyles.css">
 </head>
 
-<body data-theme="light" class="font-sans-system min-h-screen flex flex-col" id="body">
+<body data-theme="light" class="font-sans-system min-h-screen flex flex-col">
 
   <!-- Controls injected by JS -->
 
@@ -27,7 +27,6 @@
 
     <div id="posts-list" class="space-y-16"></div>
   </main>
-
   <script>
     function setTheme(theme) {
       document.body.setAttribute("data-theme", theme);
@@ -43,39 +42,87 @@
 
     setTheme(localStorage.getItem("blogTheme") || "light");
     setFont(localStorage.getItem("blogFont") || "sans");
-
   </script>
+
   <!-- Injected data -->
   <script>
     window.BLOG_POSTS = [
-      {
-        "content": "So before we do this, here's a little insight in what's my current process to write these things.\nWhat I do is I write the content in a .md file, then I copy paste all the content into an html file ma",
-        "created_at": "January 26, 2026",
-        "filename": "what_would_biswa_do_at_blith",
-        "title": "What would Biswa do at Blith?"
-      },
-      {
-        "content": "Yep, I'm having one. Don't even know if I spelled that one right.\n\nAlso what a beautiful app Paper is, and how shame it is that it doesn't have a vim mode. Can I style neovim like this? Let's ask our",
-        "created_at": "February 8 2025",
-        "filename": "existential_crisis",
-        "title": "Existential Crisis"
-      },
-      {
-        "content": "Hmm.\n\nOkay, so I'm typing this in the nvim coffee mode. I got this mode from a good man whose website is something like fully faltoo.com or something.\n\n// To do: Link the coffee mode post by the origi",
-        "created_at": "January 25, 2026",
-        "filename": "already_in_meta",
-        "title": "Already in Meta"
-      },
-      {
-        "content": "Well, fuckkkk.\nIt's 3:42 AM on Jan 25th. I did something really fucking stupid on 3:37 AM.\n\nI was in the ~/blog directory and I did rm -rf ../*\nFor those who know what this does, I can hear your sighs",
-        "created_at": "January 25, 2026",
-        "filename": "Fuckkkk",
-        "title": "FUCKKKK"
-      }
-    ];
+  {
+    "content": "Got some things to do, obv. To list them, SIH, submitting AmazonML, Emertxe, JustJosh. These are the fixed commitments, that I need to do. Also add to that things that are not urgent, but important,",
+    "created_at": "Oct 1 2026",
+    "filename": "what_now",
+    "title": "It's more that good"
+  },
+  {
+    "content": "So before we do this, here's a little insight in what's my current process to write these things.\nWhat I do is I write the content in a .md file, then I copy paste all the content into an html file ma",
+    "created_at": "January 26, 2026",
+    "filename": "what_would_biswa_do_at_blith",
+    "title": "What would Biswa do at Blith?"
+  },
+  {
+    "content": "I just wanted to clarify, that just because I didn't blog for a while, doesn't mean that I'm dead. I have seen these kind of allegations float a lot, specially during the Iran Israel America threeway",
+    "created_at": "March 22, 2026",
+    "filename": "not_dead_yet",
+    "title": "I'm not dead yet"
+  },
+  {
+    "content": "Well, fuckkkk.\nIt's 3:42 AM on Jan 25th. I did something really fucking stupid on 3:37 AM.\n\nI was in the ~/blog directory and I did rm -rf ../*\nFor those who know what this does, I can hear your sighs",
+    "created_at": "January 25, 2026",
+    "filename": "Fuckkkk",
+    "title": "FUCKKKK"
+  },
+  {
+    "content": "So I'm in Bengaluru, or should I say I'm leaving Bengaluru in an hour, and I feel sad. Bengaluru has been the best city I've ever been to, and tbh, seems like a great place to settle in if and when I",
+    "created_at": "Wednesday, 29 July 2026",
+    "filename": "idk_but_better",
+    "title": "Idk, but better"
+  },
+  {
+    "content": "Yes, I call it internview. Why? Cause it's an interview for an internship.\n\nNow the actual stuff. The company is called, Lumyst.",
+    "created_at": "",
+    "filename": "internview",
+    "title": "Internview"
+  },
+  {
+    "content": "I don't know what I am doing with my life. All I know is that I've got an intern in a month, where I will earn 45k per month. Now here's the thing, 45k is less. You know what, it's not less, but it sh",
+    "created_at": "Thursday, April 9 2026",
+    "filename": "idk",
+    "title": "idK"
+  },
+  {
+    "content": "I gotta change mate. I gotta change for the better, the best. I need to be the best that I can ever be. This mediocrity is boring me, it's killing me. I don't want to spend 20 minutes thinking should",
+    "created_at": "Monday, April 13 2026",
+    "filename": "change",
+    "title": "Change"
+  },
+  {
+    "content": "Yep, I'm having one. Don't even know if I spelled that one right.\n\nAlso what a beautiful app Paper is, and how shame it is that it doesn't have a vim mode. Can I style neovim like this? Let's ask our",
+    "created_at": "February 8 2025",
+    "filename": "existential_crisis",
+    "title": "Existential Crisis"
+  },
+  {
+    "content": "Hmm.\n\nOkay, so I'm typing this in the nvim coffee mode. I got this mode from a good man whose website is something like fully faltoo.com or something.\n\n// To do: Link the coffee mode post by the origi",
+    "created_at": "January 25, 2026",
+    "filename": "already_in_meta",
+    "title": "Already in Meta"
+  },
+  {
+    "content": "So it's 1:37 AM on 5 April and I need to code a lot more. Just a lot more. I stopped going to the college so that I can code a lot more. Should I uninstall Antigravity? No, cause I want that for dvai",
+    "created_at": "Sunday, 5 April 2026",
+    "filename": "i_need_to_code",
+    "title": "I need to code"
+  },
+  {
+    "content": "So this is not going to be exactly 12 hour challenge, as the current time is 1329, and I'll take breaks in between, but it sounds better this way.\nLet's start\n\n1330: Need to read firebase docs and im",
+    "created_at": "Friday, April 17 2026",
+    "filename": "12_hours_challenge",
+    "title": "12 Hours Challenge"
+  }
+];
   </script>
-  <script src="https://cdn.jsdelivr.net/gh/advait87/blog@main/sites/indexScript.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/gh/advait87/blog@main/sites/indexScript.js"></script>
 </body>
 
 </html>
